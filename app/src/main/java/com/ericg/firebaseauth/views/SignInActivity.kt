@@ -8,6 +8,7 @@ import com.ericg.firebaseauth.R
 import com.ericg.firebaseauth.extensions.Extensions.toast
 import com.ericg.firebaseauth.utils.FirebaseUtils.fAuth
 import com.ericg.firebaseauth.utils.FirebaseUtils.fUser
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
@@ -25,6 +26,15 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        val user: FirebaseUser? = fAuth.currentUser
+        user?.let {
+            startActivity(Intent(this, HomeActivity::class.java))
+            toast("welcome back")
+        }
+    }
+
     private fun notEmpty(): Boolean {
         return etEmail.text.toString().trim().isNotEmpty() &&
                 etPassword.text.toString().trim().isNotEmpty() &&
@@ -32,7 +42,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun identicalPassword(): Boolean {
-        var identical: Boolean = false
+        var identical = false
         if (notEmpty() &&
             etPassword.text.toString().trim() == etConfirmPassword.text.toString().trim()
         ) {
