@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.firebaseauth.R
 import com.ericg.firebaseauth.extensions.Extensions.toast
-import com.ericg.firebaseauth.utils.FirebaseUtils.fAuth
+import com.ericg.firebaseauth.utils.FirebaseUtils.firebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -14,9 +14,10 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         btnSignOut.setOnClickListener {
-            fAuth.signOut()
-            startActivity(Intent(this, SignInActivity::class.java))
+            firebaseAuth.signOut()
+            startActivity(Intent(this, CreateAccountActivity::class.java))
             toast("signed out")
+            finish()
         }
     }
 }
