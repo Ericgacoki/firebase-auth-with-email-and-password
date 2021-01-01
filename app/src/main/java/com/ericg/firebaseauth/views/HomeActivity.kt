@@ -8,7 +8,7 @@ import com.ericg.firebaseauth.extensions.Extensions.toast
 import com.ericg.firebaseauth.utils.FirebaseUtils.firebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 
-// todo use dataBinding instead of kotlin synthetics
+
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
