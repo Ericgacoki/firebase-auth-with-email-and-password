@@ -4,6 +4,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 object FirebaseUtils {
-    val fAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    val fUser: FirebaseUser? = fAuth.currentUser
+    val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
 }
