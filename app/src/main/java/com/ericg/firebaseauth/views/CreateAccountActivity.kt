@@ -36,7 +36,7 @@ class CreateAccountActivity : AppCompatActivity() {
         val user: FirebaseUser? = firebaseAuth.currentUser
         user?.let {
             startActivity(Intent(this, HomeActivity::class.java))
-            toast("welcome back")
+            toast("welcome back!")
         }
     }
 
