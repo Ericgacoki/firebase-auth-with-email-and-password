@@ -4,7 +4,7 @@ import android.app.Activity
 import android.widget.Toast
 
 object Extensions {
-    fun Activity.toast(msg: String){
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    fun Activity.toast(message: String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
