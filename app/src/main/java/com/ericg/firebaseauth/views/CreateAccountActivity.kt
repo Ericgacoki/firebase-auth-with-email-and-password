@@ -6,40 +6,43 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.firebaseauth.R
 import com.ericg.firebaseauth.extensions.Extensions.toast
-import com.ericg.firebaseauth.utils.FirebaseUtils.fAuth
-import com.ericg.firebaseauth.utils.FirebaseUtils.fUser
+import com.ericg.firebaseauth.utils.FirebaseUtils.firebaseAuth
+import com.ericg.firebaseauth.utils.FirebaseUtils.firebaseUser
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_sign_in.*
+import kotlinx.android.synthetic.main.activity_create_account.*
 
-class SignInActivity : AppCompatActivity() {
-    lateinit var inputsArray: Array<EditText>
+class CreateAccountActivity : AppCompatActivity() {
     lateinit var userEmail: String
     lateinit var userPassword: String
+    lateinit var createAccountInputsArray: Array<EditText>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
-
-        inputsArray = arrayOf(etEmail, etPassword, etConfirmPassword)
-        btnSignIn.setOnClickListener {
+        setContentView(R.layout.activity_create_account)
+        createAccountInputsArray = arrayOf(etEmail, etPassword, etConfirmPassword)
+        btnCreateAccount.setOnClickListener {
             signIn()
+        }
+
+        btnSignIn2.setOnClickListener {
+            startActivity(Intent(this, SignInActivity::class.java))
+            toast("please sign")
+            finish()
         }
     }
 
     override fun onStart() {
         super.onStart()
-        val user: FirebaseUser? = fAuth.currentUser
+        val user: FirebaseUser? = firebaseAuth.currentUser
         user?.let {
             startActivity(Intent(this, HomeActivity::class.java))
             toast("welcome back")
         }
     }
 
-    private fun notEmpty(): Boolean {
-        return etEmail.text.toString().trim().isNotEmpty() &&
-                etPassword.text.toString().trim().isNotEmpty() &&
-                etConfirmPassword.text.toString().trim().isNotEmpty()
-    }
+    private fun notEmpty(): Boolean = etEmail.text.toString().trim().isNotEmpty() &&
+            etPassword.text.toString().trim().isNotEmpty() &&
+            etConfirmPassword.text.toString().trim().isNotEmpty()
 
     private fun identicalPassword(): Boolean {
         var identical = false
@@ -48,7 +51,7 @@ class SignInActivity : AppCompatActivity() {
         ) {
             identical = true
         } else if (!notEmpty()) {
-            inputsArray.forEach { input ->
+            createAccountInputsArray.forEach { input ->
                 if (input.text.toString().trim().isEmpty()) {
                     input.error = "${input.hint} is required"
                 }
@@ -65,14 +68,13 @@ class SignInActivity : AppCompatActivity() {
             userEmail = etEmail.text.toString().trim()
             userPassword = etPassword.text.toString().trim()
 
-            fAuth.createUserWithEmailAndPassword(userEmail, userPassword)
+            firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        toast("created user successfully !")
+                        toast("created account successfully !")
                         sendEmailVerification()
-                        // start intent here
                         startActivity(Intent(this, HomeActivity::class.java))
-
+                        finish()
                     } else {
                         toast("failed to Authenticate !")
                     }
@@ -81,12 +83,12 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun sendEmailVerification() {
-        fUser?.sendEmailVerification()?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                toast("email sent to $userEmail")
-
+        firebaseUser?.let {
+            it.sendEmailVerification().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    toast("email sent to $userEmail")
+                }
             }
-
         }
     }
 }
