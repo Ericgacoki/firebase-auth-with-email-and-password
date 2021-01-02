@@ -57,7 +57,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 }
             }
         } else {
-            toast("passwords are not matching !")
+            toast("passwords not matching !")
         }
         return identical
     }
