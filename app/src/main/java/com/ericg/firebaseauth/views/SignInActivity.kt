@@ -10,6 +10,7 @@ import com.ericg.firebaseauth.utils.FirebaseUtils.firebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
+
     lateinit var signInEmail: String
     lateinit var signInPassword: String
     lateinit var signInInputsArray: Array<EditText>
