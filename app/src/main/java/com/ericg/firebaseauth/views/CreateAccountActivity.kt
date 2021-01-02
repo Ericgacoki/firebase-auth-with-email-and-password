@@ -26,7 +26,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
         btnSignIn2.setOnClickListener {
             startActivity(Intent(this, SignInActivity::class.java))
-            toast("please sign")
+            toast("Please sign")
             finish()
         }
     }
@@ -36,7 +36,7 @@ class CreateAccountActivity : AppCompatActivity() {
         val user: FirebaseUser? = firebaseAuth.currentUser
         user?.let {
             startActivity(Intent(this, HomeActivity::class.java))
-            toast("welcome back!")
+            toast("Welcome back!")
         }
     }
 
@@ -57,7 +57,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 }
             }
         } else {
-            toast("passwords not matching !")
+            toast("passwords not matching!")
         }
         return identical
     }
@@ -71,12 +71,12 @@ class CreateAccountActivity : AppCompatActivity() {
             firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        toast("created account successfully !")
+                        toast("created account successfully!")
                         sendEmailVerification()
                         startActivity(Intent(this, HomeActivity::class.java))
                         finish()
                     } else {
-                        toast("failed to Authenticate !")
+                        toast("failed to Authenticate!")
                     }
                 }
         }
